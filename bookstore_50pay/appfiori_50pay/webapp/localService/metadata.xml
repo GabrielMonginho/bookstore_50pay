@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZODATA_50PAY_SRV_01" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="Books" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="BookId"/>
+                </Key>
+                <Property Name="BookId" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Book ID"/>
+                <Property Name="Price" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Book Price"/>
+                <Property Name="AuthorId" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Author ID"/>
+                <Property Name="Genre" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Book Genre"/>
+                <Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Title"/>
+                <Property Name="AuthorName" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Author"/>
+                <Property Name="Stock" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Stock"/>
+            </EntityType>
+            <EntityType Name="Authors" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="AuthorId"/>
+                </Key>
+                <Property Name="AuthorId" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Author ID"/>
+                <Property Name="BirthYear" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Birth Year"/>
+                <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Name"/>
+                <Property Name="Nationality" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Nationality"/>
+            </EntityType>
+            <EntityType Name="Purchases" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="PurchaseId"/>
+                </Key>
+                <Property Name="PurchaseId" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Purchase ID"/>
+                <Property Name="Quantity" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Books Quantity"/>
+                <Property Name="BookId" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Book ID"/>
+                <Property Name="PurchaseDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Purchase Date"/>
+                <Property Name="AuthorName" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Author"/>
+                <Property Name="BookTitle" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="Book Title"/>
+            </EntityType>
+            <EntityContainer Name="ZODATA_50PAY_SRV_01_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="BooksSet" EntityType="ZODATA_50PAY_SRV_01.Books" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="AuthorsSet" EntityType="ZODATA_50PAY_SRV_01.Authors" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="PurchasesSet" EntityType="ZODATA_50PAY_SRV_01.Purchases" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <atom:link rel="self" href="https://SSA-SBX.SHERPA.SIEMENS.COM:44300/sap/opu/odata/sap/ZODATA_50PAY_SRV_01/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://SSA-SBX.SHERPA.SIEMENS.COM:44300/sap/opu/odata/sap/ZODATA_50PAY_SRV_01/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

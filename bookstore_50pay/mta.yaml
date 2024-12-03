@@ -1,0 +1,92 @@
+_schema-version: "3.2"
+ID: bookstore_50pay
+version: 0.0.1
+modules:
+- name: bookstore_50pay-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: bookstore_50pay-destination-service
+    parameters:
+      content-target: true
+  - name: bookstore_50pay_html_repo_host
+    parameters:
+      service-key:
+        name: bookstore_50pay_html_repo_host-key
+  - name: uaa_bookstore_50pay
+    parameters:
+      service-key:
+        name: uaa_bookstore_50pay-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: bookstore_app_bookstore_50pay_html_repo_host
+          ServiceInstanceName: bookstore_50pay-html5-app-host-service
+          ServiceKeyName: bookstore_50pay_html_repo_host-key
+          sap.cloud.service: bookstore_app
+        - Authentication: OAuth2UserTokenExchange
+          Name: bookstore_app_uaa_bookstore_50pay
+          ServiceInstanceName: bookstore_50pay-xsuaa-service
+          ServiceKeyName: uaa_bookstore_50pay-key
+          sap.cloud.service: bookstore_app
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: bookstore_50pay-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: bookstore_50pay_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - appfiori50pay.zip
+      name: appfiori50pay
+      target-path: resources/
+- name: appfiori50pay
+  type: html5
+  path: appfiori_50pay
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: bookstore_50pay-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: bookstore_50pay-destination-service
+    service-plan: lite
+- name: bookstore_50pay_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: bookstore_50pay-html5-app-host-service
+    service-plan: app-host
+- name: uaa_bookstore_50pay
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: bookstore_50pay-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
